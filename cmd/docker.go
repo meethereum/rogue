@@ -14,13 +14,13 @@ var dockerCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		output, err := exec.Command("groups").Output()
 		if err != nil {
-			fmt.Println("Error: %v",err)
+			fmt.Printf("Error: %v\n", err)
 			return
 		}
 
 		if strings.Contains(string(output), "docker") {
-			color.Green("[+] User is in the docker group — potential escape!")
-			fmt.Println("Try: docker run -v /:/mnt --rm -it alpine chroot /mnt sh")
+			color.Green("[+] Potential vulnerability: User is in the docker group.")
+			fmt.Println("Try mounting / as a container volume to access sensitive files like /etc/shadow.")
 		} else {
 			color.Red("[-] User is NOT in the docker group.")
 		}
