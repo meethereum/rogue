@@ -12,6 +12,7 @@ var dockerCmd = &cobra.Command{
 	Use:   "docker",
 	Short: "Check if user is in the docker group",
 	Run: func(cmd *cobra.Command, args []string) {
+		fmt.Println("Checking if user is in the docker group...")
 		output, err := exec.Command("groups").Output()
 		if err != nil {
 			fmt.Printf("Error: %v\n", err)
@@ -19,10 +20,10 @@ var dockerCmd = &cobra.Command{
 		}
 
 		if strings.Contains(string(output), "docker") {
-			color.Green("[+] Potential vulnerability: User is in the docker group.")
-			fmt.Println("Try mounting / as a container volume to access sensitive files like /etc/shadow.")
+			color.Red("[CRITICAL] User is in the docker group.")
+			fmt.Println("Try mounting / as a container volume to access sensitive files like /etc/shadow to exploit.")
 		} else {
-			color.Red("[-] User is NOT in the docker group.")
+			color.Green("User is NOT in the docker group.")
 		}
 	},
 }

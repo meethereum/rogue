@@ -17,7 +17,6 @@ It runs various enumeration checks and outputs findings in a structured way.`,
 	},
 }
 
-
 func Execute() {
 	if err := rootCmd.Execute(); err != nil {
 		fmt.Println(err)
